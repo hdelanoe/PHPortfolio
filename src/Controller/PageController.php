@@ -13,8 +13,9 @@ class PageController extends AbstractController
     public function home(): Response
     {
         // On rendra un template spécifique pour l'accueil
-        return $this->render('page/home.html.twig');
-        // Plus besoin de passer 'controller_name' pour l'instant
+        return $this->render('page/home.html.twig', [
+            'is_homepage' => true, // Ajoute cette variable
+        ]);
     }
 
     // Route pour la page des réalisations

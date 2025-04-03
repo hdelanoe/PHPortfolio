@@ -1,3 +1,205 @@
+/* assets/styles/app.css */
+
+/* ======================================== */
+/* Base & Global Styles                     */
+/* ======================================== */
+
 body {
-    background-color: skyblue;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a; /* Fond sombre */
+    color: #e0e0e0; /* Texte clair */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    position: relative; /* Nécessaire pour z-index */
+    z-index: 1;       /* Au-dessus de la vidéo fixe */
+    /* background-color: transparent; /* Important si la vidéo doit se voir derrière */
+}
+
+h1, h2, h3 {
+    color: #ffffff;
+    font-weight: 300;
+}
+/* Spécifique pour le H1 de la homepage, s'il reste centré */
+.center-content h1 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    /* Pas besoin de pointer-events ici, le conteneur s'en charge */
+}
+
+
+a {
+    color: #a0a0a0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ffffff;
+}
+
+/* Style pour le header */
+header {
+    position: relative; /* Nécessaire pour z-index */
+    z-index: 2;       /* Au-dessus de main et de la vidéo */
+    /* Tes styles background/padding d'origine pour les pages NON homepage */
+}
+
+header nav ul {
+    list-style: none;
+    padding: 10px 20px;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+    background-color: #252525; /* Fond par défaut */
+}
+
+/* Style pour le footer */
+footer {
+     position: relative; /* Nécessaire pour z-index */
+     z-index: 2;       /* Au-dessus de main et de la vidéo */
+     text-align: center;
+     padding: 15px;
+     font-size: 0.9em;
+     color: #777;
+     background-color: #111; /* Fond par défaut */
+}
+
+/* ======================================== */
+/* Homepage Transparency Styles             */
+/* ======================================== */
+
+header.transparent-header nav ul {
+    background-color: transparent; /* Enlève le fond de la liste de navigation */
+}
+
+
+
+
+footer.transparent-footer {
+    background-color: transparent !important; /* Enlève le fond */
+    /* Optionnel: Ajouter une ombre au texte */
+    /* color: rgba(255, 255, 255, 0.8); /* Rendre le texte plus clair */
+    /* text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); */
+}
+
+/* ======================================== */
+/* Homepage Specific Styles                 */
+/* ======================================== */
+
+/* Cible la balise <main> spécifiquement sur la homepage via Twig ou JS,
+   ou si tu lui donnes une classe spécifique comme 'homepage-main' */
+   main.homepage-main {
+    padding: 0 !important;
+    overflow: visible; /* Ne pas cacher ce qui déborde si besoin, mais pas critique ici */
+    background-color: transparent; /* Assure que main est transparent sur la homepage */
+}
+
+.video-background-container {
+    position: fixed;  /* FIXE par rapport à la fenêtre */
+    top: 0;
+    left: 0;
+    width: 100vw;     /* Largeur totale de la fenêtre */
+    height: 100vh;    /* Hauteur totale de la fenêtre */
+    z-index: -1;      /* DERRIÈRE TOUT LE RESTE (header, main, footer) */
+    overflow: hidden; /* Cache le débordement de la vidéo elle-même */
+}
+
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* La vidéo elle-même n'a pas besoin de pointer-events: none;
+       car l'overlay va déjà le faire. */
+}
+
+.content-overlay {
+    position: absolute; /* Par rapport à main.homepage-main */
+    top: 0;
+    left: 0;
+    width: 100%; /* Prend 100% de main */
+    height: 100%;/* Prend 100% de main */
+    z-index: 0; /* Au-dessus de la vidéo (-1) mais sous le contenu de main (1) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: transparent;
+    pointer-events: none;
+}
+
+.content-overlay h1 {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    margin: 0;
+    pointer-events: auto;
+}
+
+
+/* --- Bouton Play/Pause positionné indépendamment --- */
+.play-pause-button {
+    position: fixed;   /* FIXE par rapport à la fenêtre */
+    top: 30px;         /* Ajuste cette valeur */
+    right: 30px;        /* Ajuste cette valeur */
+    width: 60px;        /* Taille du cercle */
+    height: 60px;
+    background-color: #000000; /* Fond NOIR quand en pause (état initial) */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Bordure légère */
+    border-radius: 50%; /* Cercle parfait */
+    cursor: pointer;
+    z-index: 100;       /* Au-dessus de presque tout, même le h1 et header */
+    display: flex;      /* Pour centrer l'icône ::before */
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4); /* Un peu d'ombre */
+
+    /* --- TRÈS IMPORTANT --- */
+    pointer-events: auto; /* Le bouton DOIT être cliquable */
+}
+
+.play-pause-button:hover {
+    transform: scale(1.1); /* Effet de survol */
+    /* background-color: #111; */ /* Optionnel: Léger changement au survol */
+}
+
+/* --- Icône Play (Triangle Blanc sur Fond Noir) --- */
+.play-pause-button::before {
+    content: '';
+    display: block;
+    box-sizing: border-box;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 16px; /* Ajuste taille icône */
+    border-color: transparent transparent transparent #FFFFFF; /* Icône BLANCHE */
+    margin-left: 4px; /* Ajustement centrage */
+    transition: all 0.2s ease;
+    pointer-events: none; /* L'icône ne gêne pas le clic */
+}
+
+/* --- État "Playing" --- */
+.play-pause-button.playing {
+    background-color: #FFFF00; /* Fond JAUNE ÉLECTRIQUE quand en lecture */
+    border-color: rgba(0, 0, 0, 0.5); /* Bordure sombre sur fond jaune */
+}
+
+/* --- Icône Pause (Barres NOIRES sur Fond Jaune) --- */
+.play-pause-button.playing::before {
+    width: 18px; /* Largeur barres pause */
+    height: 20px; /* Hauteur barres pause */
+    border-style: double;
+    border-width: 0px 0px 0px 18px; /* Épaisseur/espace barres */
+    border-color: #111111; /* Icône NOIRE */
+    margin-left: 0; /* Réajustement centrage */
+    pointer-events: none; /* L'icône ne gêne pas le clic */
 }

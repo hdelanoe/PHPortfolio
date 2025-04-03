@@ -1,10 +1,19 @@
 {# templates/page/home.html.twig #}
-{% extends 'base.html.twig' %} {# Hérite du layout de base #}
+{% extends 'base.html.twig' %}
 
-{% block title %}Accueil - Mon Portfolio{% endblock %} {# Surcharge le titre #}
+{% block title %}Accueil - Fort Loop Studio{% endblock %}
 
-{% block body %} {# Remplit le bloc body #}
-    <h1>Bienvenue sur mon Portfolio</h1>
-    <p>Contenu de la page d'accueil.</p>
-    {# C'est ici qu'on mettra la vidéo et le bouton plus tard #}
+{% block body %}
+    <div class="video-background-container">
+        <video id="background-video" loop muted playsinline preload="metadata">
+            <source src="{{ asset('videos/background.mp4') }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo HTML5.
+        </video>
+    </div>
+
+    <div class="content-overlay">
+        <h1>Fort Loop Studio</h1>
+        {# L'état initial est 'play' car la vidéo est en pause #}
+        <button id="play-pause-button" class="play-pause-button" type="button" aria-label="Lancer la vidéo"></button>
+    </div>
 {% endblock %}

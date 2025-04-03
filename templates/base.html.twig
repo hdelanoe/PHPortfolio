@@ -9,13 +9,12 @@
 
         {# On laissera ce block pour les futurs CSS #}
         {% block stylesheets %}
-            {# asset() sera expliqué plus tard avec les assets CSS/JS #}
-            {# Exemple: <link rel="stylesheet" href="{{ asset('styles/app.css') }}"> #}
+           <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
         {% endblock %}
     </head>
     <body>
         {# On ajoutera la navigation ici bientôt #}
-        <header>
+        <header class="{{ is_homepage | default(false) ? 'transparent-header' : '' }}">
             <nav>
                 <ul>
                     <li><a href="{{ path('app_home') }}">Accueil</a></li>
@@ -25,17 +24,16 @@
             </nav>
         </header>
 
-        <main>
+        <main class="{{ is_homepage | default(false) ? 'homepage-main' : '' }}">
             {% block body %}{% endblock %}
         </main>
 
-        <footer>
+        <footer class="{{ is_homepage | default(false) ? 'transparent-footer' : '' }}">
             <p>© {{ 'now'|date('Y') }} Fort Loop Studio</p>
         </footer>
 
-        {# On laissera ce block pour les futurs JS #}
         {% block javascripts %}
-            {# Exemple: <script src="{{ asset('app.js') }}"></script> #}
+            <script src="{{ asset('app.js') }}"></script>
         {% endblock %}
     </body>
 </html>
