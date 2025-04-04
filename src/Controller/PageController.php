@@ -33,4 +33,10 @@ class PageController extends AbstractController
         // On rendra un template pour la page "À Propos"
         return $this->render('page/about.html.twig');
     }
+
+    #[Route('/contact', name: 'app_contact')] // Route pour la page contact
+    public function contact(): Response
+    {
+        return $this->render('page/contact.html.twig');
+    }
 }

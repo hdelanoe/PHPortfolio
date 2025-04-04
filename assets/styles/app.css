@@ -4,16 +4,40 @@
 /* Base & Global Styles                     */
 /* ======================================== */
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+/* --- Variables CSS (Custom Properties) --- */
+:root {
+    --color-background: #1a1a1a; /* Gris très foncé, presque noir */
+    --color-text: #e0e0e0;      /* Gris très clair */
+    --color-primary: #ffffff;    /* Blanc pur pour les accents */
+    --color-secondary: #444444;  /* Gris moyen pour bordures/séparateurs */
+    --font-main: 'Roboto Mono', monospace; /* Police style "techno" */
+}
+
+/* --- Reset / Base --- */
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a; /* Fond sombre */
-    color: #e0e0e0; /* Texte clair */
+}
+
+html {
+    font-size: 16px; /* Base pour les rem */
+}
+
+body {
+    font-family: var(--font-main);
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
+
 
 main {
     flex-grow: 1;
@@ -23,10 +47,32 @@ main {
     /* background-color: transparent; /* Important si la vidéo doit se voir derrière */
 }
 
-h1, h2, h3 {
-    color: #ffffff;
-    font-weight: 300;
+/* --- Typographie --- */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-weight: 700; /* Police en gras */
 }
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s ease; /* Effet subtil au survol */
+}
+
+a:hover, a:focus {
+    color: var(--color-text);
+    text-decoration: underline; /* Soulignement au survol/focus */
+}
+
+
 /* Spécifique pour le H1 de la homepage, s'il reste centré */
 .center-content h1 {
     font-size: 3rem;
@@ -50,16 +96,14 @@ a:hover {
 header {
     position: relative; /* Nécessaire pour z-index */
     z-index: 2;       /* Au-dessus de main et de la vidéo */
-    /* Tes styles background/padding d'origine pour les pages NON homepage */
+    padding: 1rem 0;
 }
 
 header nav ul {
     list-style: none;
-    padding: 10px 20px;
-    margin: 0;
     display: flex;
-    gap: 20px;
-    background-color: #252525; /* Fond par défaut */
+    justify-content: center; /* Centre les items */
+    gap: 2rem; /* Espace entre les items */
 }
 
 /* Style pour le footer */
@@ -69,7 +113,7 @@ footer {
      text-align: center;
      padding: 15px;
      font-size: 0.9em;
-     color: #777;
+     color: var(--color-secondary); /* Couleur plus discrète */
      background-color: #111; /* Fond par défaut */
 }
 
