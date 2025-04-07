@@ -1,10 +1,48 @@
 {# templates/page/realisations.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes Réalisations - Mon Portfolio{% endblock %}
+{% block title %}Réalisations - Mon Portfolio{% endblock %}
 
 {% block body %}
-    <h1>Mes Réalisations</h1>
-    <p>Ici s'affichera la galerie de mes œuvres.</p>
-    {# On listera les réalisations ici plus tard #}
+    <h1>Réalisations</h1>
+
+    {# Vérifier si la variable 'projects' existe et contient des éléments #}
+    {% if projects is defined and projects|length > 0 %}
+
+        {# Conteneur principal pour Swiper #}
+        <div class="swiper projects-swiper">
+            {# Wrapper requis par Swiper pour les slides #}
+            <div class="swiper-wrapper">
+
+                {# Boucle sur chaque projet pour créer une 'slide' Swiper #}
+                {% for project in projects %}
+                    <div class="swiper-slide"> {# Chaque projet est maintenant une slide #}
+                        {# La carte projet reste la même à l'intérieur de la slide #}
+                        <article class="project-card">
+                            <div class="project-image">
+                                <img src="{{ project.imageUrl }}" alt="{{ project.altText }}">
+                            </div>
+                            <div class="project-info">
+                                <h2 class="project-title">{{ project.title }}</h2>
+                                <p class="project-category">{{ project.category }}</p>
+                                <p class="project-description">{{ project.description }}</p>
+                                {# <a href="#">En savoir plus</a> #}
+                            </div>
+                        </article>
+                    </div> {# Fin de swiper-slide #}
+                {% endfor %} {# Fin de la boucle for #}
+
+            </div> {# Fin de swiper-wrapper #}
+
+            {# Optionnel: Ajouter des éléments de navigation Swiper si désiré #}
+            {# <div class="swiper-pagination"></div> #}
+            {# <div class="swiper-button-prev"></div> #}
+            {# <div class="swiper-button-next"></div> #}
+
+        </div> {# Fin de projects-swiper #}
+
+    {% else %}
+        <p>Mes réalisations seront bientôt présentées ici. Revenez consulter cette page !</p>
+    {% endif %} {# Fin de la condition if #}
+
 {% endblock %}

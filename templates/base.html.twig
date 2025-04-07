@@ -4,16 +4,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Mon Portfolio{% endblock %}</title> {# Titre par défaut, surchargeable #}
+        <title>{% block title %}Mon Portfolio{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%22.9em%22 font-size=%2296%22>⚫️</text></svg>">
 
-        {# On laissera ce block pour les futurs CSS #}
+        {# Utilise encore_entry_link_tags pour le CSS compilé par Encore #}
         {% block stylesheets %}
-           <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
-        {# On ajoutera la navigation ici bientôt #}
         <header class="{{ is_homepage | default(false) ? 'transparent-header' : '' }}">
             <nav>
                 <ul>
@@ -30,11 +29,12 @@
         </main>
 
         <footer class="{{ is_homepage | default(false) ? 'transparent-footer' : '' }}">
-            <p>© {{ 'now'|date('Y') }} Fort Loop Studio</p>
+             <p>© {{ 'now'|date('Y') }} Fort Loop Studio  - Tous droits réservés. </p>
         </footer>
 
+        {# Utilise encore_entry_script_tags pour le JS compilé par Encore #}
         {% block javascripts %}
-            <script src="{{ asset('app.js') }}"></script>
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </body>
 </html>

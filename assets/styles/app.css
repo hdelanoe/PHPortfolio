@@ -6,6 +6,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
+
+
 /* --- Variables CSS (Custom Properties) --- */
 :root {
     --color-background: #1a1a1a; /* Gris très foncé, presque noir */
@@ -108,13 +110,13 @@ header nav ul {
 
 /* Style pour le footer */
 footer {
-     position: relative; /* Nécessaire pour z-index */
-     z-index: 2;       /* Au-dessus de main et de la vidéo */
-     text-align: center;
-     padding: 15px;
-     font-size: 0.9em;
-     color: var(--color-secondary); /* Couleur plus discrète */
-     background-color: #111; /* Fond par défaut */
+    position: relative;
+    text-align: center;
+    padding: 20px 15px; /* Un peu plus de padding */
+    font-size: 0.9em;
+    color: #a0a0a0; /* Texte gris clair sur fond plus foncé */
+   
+   
 }
 
 /* ======================================== */
@@ -124,8 +126,6 @@ footer {
 header.transparent-header nav ul {
     background-color: transparent; /* Enlève le fond de la liste de navigation */
 }
-
-
 
 
 footer.transparent-footer {
@@ -246,4 +246,131 @@ footer.transparent-footer {
     border-color: #111111; /* Icône NOIRE */
     margin-left: 0; /* Réajustement centrage */
     pointer-events: none; /* L'icône ne gêne pas le clic */
+}
+
+.projects-swiper {
+    width: 100%;
+    height: 100%;
+    margin-top: 3rem;
+    padding-right: 3rem;
+    overflow: hidden; /* On garde hidden */
+    position: relative;
+}
+
+.swiper-wrapper {
+    padding: 50px 50px; /* Padding pour l'ombre */
+    display: flex; /* Assure-toi qu'il est bien flex */
+    height: 100%;
+}
+
+.swiper-slide {
+    /* --- Largeur gérée par Swiper (slidesPerView) --- */
+    /* width: auto; // Ou ne pas définir de width ici */
+    /* --------------------------------------------- */
+
+    /* --- Hauteur Fixe pour l'uniformité --- */
+    height: 500px; /* << Ajuste si la précédente était trop grande */
+    /* ------------------------------------ */
+
+    display: flex;
+    /* Ajouter transition pour éviter "saut" lors du resize si slidesPerView change */
+    transition: width 0.3s ease;
+}
+
+.swiper-slide .project-card {
+    width: 100%;
+    height: 55vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pousse .project-info vers le bas */
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
+    transition: /* Pas de transform ici ! */
+        box-shadow 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+        border-color 0.3s ease-out,
+        background-color 0.3s ease-out,
+        filter 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Ajout easing */ /* z-index change après */
+    z-index: 0;    
+    /* Pas besoin de z-index si la carte ne scale pas */
+}
+
+.swiper-slide .project-card:hover {
+    transform: scale(1.1); /* << Zoom léger sur la carte */
+    overflow: hidden;
+    z-index: 10;
+    transition-delay: 0s; /* z-index immédiat */
+    filter: grayscale(50%) brightness(85%);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+    border-color: #555555;
+    background-color: #282828;
+}
+
+/* --- Image (Zoom Interne au survol de la carte) --- */
+.swiper-slide .project-image { /* Ajout d'un conteneur pour l'image si besoin de cacher overflow du scale interne */
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute; /* Contexte pour l'image */
+    z-index: 0;
+}
+.swiper-slide .project-image img {
+    display: block;
+    width: 100%;
+    height: 100%; /* Prend la hauteur du conteneur .project-image */
+    object-fit: cover;
+    transition: filter 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Ajout easing */
+    filter: grayscale(50%) brightness(85%);
+}
+/* Zoom appliqué à l'image quand la *carte* est survolée */
+.swiper-slide .project-card:hover .project-image img {
+    filter: grayscale(0%) brightness(100%);
+    transform: scale(1.08); /* << Zoom interne image un peu plus marqué */
+}
+
+
+/* --- Infos --- */
+.swiper-slide .project-info {
+    padding: 1.1rem 1.4rem;
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex; /* Pour mieux contrôler le contenu */
+    flex-direction: column;
+    z-index: 2;
+}
+/* Titre (Zoom et Effet au survol de la carte) */
+.swiper-slide .project-title {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    /* --- Ajout Transition pour le zoom du titre --- */
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s ease;
+    transform-origin: left center; /* Zoom depuis la gauche */
+    /* --- Pour éviter que le texte ne "saute" trop --- */
+    /* display: inline-block; // Peut aider mais attention au layout */
+}
+/* Zoom appliqué au titre quand la *carte* est survolée */
+.swiper-slide .project-card:hover .project-title {
+    transform: scale(1.1); /* << Zoom léger sur le titre */
+    color: #FFF; /* Blanc éclatant au survol */
+    /* text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); // Effet lumineux optionnel */
+}
+
+.swiper-slide .project-category { font-size: 0.75rem; color: #999; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.8px; flex-shrink: 0; /* Empêche de rétrécir */ }
+.swiper-slide .project-description { font-size: 0.85rem; line-height: 1.6; color: var(--color-text); overflow: hidden; /* Cache le texte qui dépasse */ text-overflow: ellipsis; /* Ajoute "..." si trop long */ /* Optionnel: limiter le nombre de lignes */ /* display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; */ }
+
+
+/* --- Scrollbar Swiper (Règles toujours supprimées) --- */
+
+
+/* --- Responsive (Ajuster hauteurs) --- */
+@media (max-width: 1024px) {
+    .swiper-slide { height: 580px; } /* Augmenté */
+}
+@media (max-width: 768px) {
+    .swiper-slide { height: 520px; } /* Augmenté */
+}
+@media (max-width: 480px) {
+    .swiper-slide { height: 480px; } /* Augmenté */
+    /* Ajuster padding/fontes si besoin pour la nouvelle hauteur */
 }

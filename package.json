@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "swiper": "^11.2.6"
+  },
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^5.1.0",
+    "core-js": "^3.41.0",
+    "css-loader": "^7.1.2",
+    "postcss-loader": "^7.3.3",
+    "style-loader": "^4.0.0",
+    "webpack-notifier": "^1.15.0"
+  }
+}
